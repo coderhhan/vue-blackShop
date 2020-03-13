@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login'
-import Home from '@/views/home/Home'
+const Login = () => import('../components/Login')
+const Home = () => import('@/views/home/Home')
+const Welcome = () => import('@/views/welcome/Welcome')
+const Users = () => import('@/views/Users')
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,12 +17,24 @@ const routes = [
   },
   {
     path: '/home',
-    component: Home
+    component: Home,
+    redirect: '/welcome',
+    children: [
+      {
+        path: '/welcome',
+        component: Welcome
+      },
+      {
+        path: '/users',
+        component: Users
+      }
+    ]
   }
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'// 取消url中的#
 })
 
 router.beforeEach((to, from, next) => {

@@ -33,13 +33,13 @@
 </template>
 
 <script>
-import { request } from '../network/request'
+import { loginRequest } from '../network/request'
 export default {
   name: 'Login',
   data () {
     return {
       loginForm: {
-        username: 'huanghan',
+        username: 'hh12345',
         password: '6593523'
       },
       loginFormRules: {
@@ -61,21 +61,26 @@ export default {
     login () {
       this.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return false
-        const result = await request({
-          url: '/user/login?api_hash=' + new Date().getTime(), // 防止ie缓存
+        const result = await loginRequest({
+          url: 'api/v2/login/login?api_hash=' + new Date().getTime(), // 防止ie缓存
           method: 'POST',
           data: {
-            user: this.loginForm.username,
+            username: this.loginForm.username,
             password: this.loginForm.password
           }
         })
-        if (result.status !== 200) return this.$message.error('账号或密码错误')
-        this.$message.success('登录成功')
-        // 登录成功之后将数据中的token 保存到sessionStorage中，localStorage会一致存在，sessionStorage当前会话存在
-        // 注册登录接口以外的接口都需要携带token发起请求
-        window.sessionStorage.setItem('token', result.data.token)
-        // 通过代码跳转路由
-        this.$router.push('/home')
+        console.log(result)
+        if (result.data.status !== 200) {
+          return this.$message.error('账号或密码错误')
+        } else {
+          this.$message.success('登录成功')
+          console.log(result)
+          // 登录成功之后将数据中的token 保存到sessionStorage中，localStorage会一致存在，sessionStorage当前会话存在
+          // 注册登录接口以外的接口都需要携带token发起请求
+          window.sessionStorage.setItem('token', result.data.data.token)
+          // 通过代码跳转路由
+          this.$router.push('/home')
+        }
       })
     }
   }
