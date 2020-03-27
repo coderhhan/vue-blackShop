@@ -39,8 +39,8 @@ export default {
   data () {
     return {
       loginForm: {
-        username: 'hh12345',
-        password: '6593523'
+        username: 'admin',
+        password: '123456'
       },
       loginFormRules: {
         username: [
@@ -49,7 +49,7 @@ export default {
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 15, message: '长度在 5 到 10 个字符', trigger: 'blur' }
+          { min: 6, message: '长度大于 5', trigger: 'blur' }
         ]
       }
     }
@@ -61,23 +61,21 @@ export default {
     login () {
       this.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return false
-        const result = await loginRequest({
-          url: 'api/v2/login/login?api_hash=' + new Date().getTime(), // 防止ie缓存
-          method: 'POST',
-          data: {
-            username: this.loginForm.username,
-            password: this.loginForm.password
+        const { data: res } = await loginRequest(
+          {
+            url: 'login',
+            data: this.loginForm,
+            method: 'POST'
           }
-        })
-        console.log(result)
-        if (result.data.status !== 200) {
+        )
+        console.log(res)
+        if (res.meta.status !== 200) {
           return this.$message.error('账号或密码错误')
         } else {
           this.$message.success('登录成功')
-          console.log(result)
           // 登录成功之后将数据中的token 保存到sessionStorage中，localStorage会一致存在，sessionStorage当前会话存在
           // 注册登录接口以外的接口都需要携带token发起请求
-          window.sessionStorage.setItem('token', result.data.data.token)
+          window.sessionStorage.setItem('token', res.data.token)
           // 通过代码跳转路由
           this.$router.push('/home')
         }

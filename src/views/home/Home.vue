@@ -50,7 +50,7 @@
 
       </el-aside>
       <!--主内容区-->
-      <el-main>
+      <el-main  style="height: calc(100vh - 60px)">
         <!--路由占位符-->
         <router-view></router-view>
       </el-main>
@@ -65,11 +65,11 @@ export default {
   data () {
     return {
       icons: {
-        '5e68454044fab7039846017e': 'iconfont icon-users',
-        '5e68454044fab70398460180': 'iconfont icon-tijikongjian',
-        '5e68454044fab70398460183': 'iconfont icon-shangpin',
-        '5e68454044fab70398460187': 'iconfont icon-danju',
-        '5e68454044fab70398460189': 'iconfont icon-baobiao'
+        125: 'iconfont icon-users',
+        103: 'iconfont icon-tijikongjian',
+        101: 'iconfont icon-shangpin',
+        102: 'iconfont icon-danju',
+        145: 'iconfont icon-baobiao'
       },
       menuLists: [],
       isCollapse: false,
@@ -89,9 +89,10 @@ export default {
     },
     menuList () {
       request({
-        url: 'menu/list?api_hash=' + new Date().getTime() // 防止ie缓存
+        url: 'menus?api_hash=' + new Date().getTime() // 防止ie缓存
       }).then(res => {
         this.menuLists = res.data
+        console.log(res)
       })
     },
     toggleCollapse () {

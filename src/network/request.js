@@ -2,7 +2,7 @@ import axios from 'axios'
 export function request (config) {
   // 1.创建axios的实例
   const instance = axios.create({
-    baseURL: 'http://localhost:3000/api/v1',
+    baseURL: 'http://127.0.0.1:8888/api/private/v1/',
     timeout: 5000
   })
   // 2拦截器interceptors                       参数可以自己命名
@@ -29,7 +29,7 @@ export function request (config) {
 export function loginRequest (config) {
   // 1.创建axios的实例
   const instance = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://127.0.0.1:8888/api/private/v1/',
     timeout: 5000
   })
   return instance(config)
