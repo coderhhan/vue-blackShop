@@ -6,6 +6,9 @@ import './plugins/element.js'
 // 导入字体库
 import 'assets/fonts/iconfont.css'
 import axios from 'axios'
+// 导入树状插件
+import ZkTable from 'vue-table-with-tree-grid'
+Vue.component('tree-table', ZkTable)
 
 Vue.config.productionTip = false
 
