@@ -38,9 +38,13 @@ import {
   Checkbox,
   CheckboxGroup,
   Upload,
-  Divider
+  Divider,
+  Timeline,
+  TimelineItem
 } from 'element-ui'
 
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 Vue.use(Divider)
 Vue.use(Upload)
 Vue.use(CheckboxGroup)
